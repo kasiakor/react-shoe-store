@@ -2,18 +2,36 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
+import Spinner from "./Spinner";
 import { getProducts } from "./services/productService";
 
 export default function App() {
   const [size, setSize] = useState("");
   const [error, setError] = useState(null);
-
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // promise
+  // useEffect(() => {
+  //   getProducts("shoes")
+  //     .then((response) => setProducts(response))
+  //     .catch((e) => setError(e))
+  //     .finally(() => setLoading(false));
+  // }, []);
+
+  // async /await
   useEffect(() => {
-    getProducts("shoes")
-      .then((response) => setProducts(response))
-      .catch((e) => setError(e));
+    async function init() {
+      try {
+        const response = await getProducts("shoes");
+        setProducts(response);
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    init();
   }, []);
 
   function renderProduct(p) {
@@ -33,6 +51,8 @@ export default function App() {
     : products;
 
   if (error) throw error;
+
+  if (loading) return <Spinner />;
 
   return (
     <>
