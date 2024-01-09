@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Spinner from "./Spinner";
-import { getProducts } from "./services/productService";
+import useFetch from "./services/useFetch";
 
 export default function App() {
   const [size, setSize] = useState("");
-  const [error, setError] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const {
+    data: products,
+    error,
+    loading,
+  } = useFetch("products?category=shoes");
 
   // promise
   // useEffect(() => {
@@ -18,21 +21,6 @@ export default function App() {
   //     .catch((e) => setError(e))
   //     .finally(() => setLoading(false));
   // }, []);
-
-  // async /await
-  useEffect(() => {
-    async function init() {
-      try {
-        const response = await getProducts("shoes");
-        setProducts(response);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    init();
-  }, []);
 
   function renderProduct(p) {
     return (
