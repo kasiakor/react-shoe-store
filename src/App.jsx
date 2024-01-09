@@ -1,50 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
-
-const products = [
-  {
-    id: 1,
-    category: "shoes",
-    image: "shoe1.jpg",
-    name: "Black Widow",
-    price: 94.95,
-    skus: [
-      { sku: "17", size: 7 },
-      { sku: "18", size: 8 },
-    ],
-    description: "Classic black dress high heels.",
-  },
-  {
-    id: 2,
-    category: "shoes",
-    image: "shoe2.jpg",
-    name: "Bloody Red",
-    price: 78.99,
-    skus: [
-      { sku: "28", size: 8 },
-      { sku: "29", size: 9 },
-    ],
-    description: "Party red hot chilly heels.",
-  },
-  {
-    id: 3,
-    category: "shoes",
-    image: "shoe3.jpg",
-    name: "Vintage Doll",
-    price: 145.95,
-    skus: [
-      { sku: "37", size: 7 },
-      { sku: "38", size: 8 },
-      { sku: "39", size: 9 },
-    ],
-    description: "Walk into the past.",
-  },
-];
+import { getProducts } from "./services/productService";
 
 export default function App() {
   const [size, setSize] = useState("");
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts("shoes").then((response) => {
+      setProducts(response);
+      console.log(response);
+    });
+  }, []);
 
   function renderProduct(p) {
     return (
@@ -80,6 +50,7 @@ export default function App() {
               <option value="9">9</option>
             </select>
           </section>
+          {size && <h2>Found {filteredProducts.length} items</h2>}
           <section id="products">{filteredProducts.map(renderProduct)}</section>
         </main>
       </div>
