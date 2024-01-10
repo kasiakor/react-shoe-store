@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 import Spinner from "./Spinner";
 import useFetch from "./services/useFetch";
 
@@ -40,6 +41,7 @@ export default function Products() {
   if (error) throw error;
 
   if (loading) return <Spinner />;
+  if (products.length === 0) return <PageNotFound />;
 
   return (
     <>
