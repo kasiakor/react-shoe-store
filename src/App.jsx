@@ -15,7 +15,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<h1>Welcome to Spike Heels</h1>}></Route>
             <Route path="/:category" element={<Products />}></Route>
-            <Route path="/details" element={<Details />}></Route>
+            <Route path="/:category/:id" element={<Details />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
           </Routes>
         </main>
