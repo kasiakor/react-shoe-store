@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Spinner from "./Spinner";
 import useFetch from "./services/useFetch";
 
 export default function Products() {
   const [size, setSize] = useState("");
+  const { category } = useParams();
 
   const {
     data: products,
     error,
     loading,
-  } = useFetch("products?category=shoes");
+  } = useFetch("products?category=" + category);
 
   // promise
   // useEffect(() => {
