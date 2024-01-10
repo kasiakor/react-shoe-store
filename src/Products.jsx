@@ -38,10 +38,10 @@ export default function Products() {
     ? products.filter((p) => p.skus.find((s) => s.size === parseInt(size)))
     : products;
 
-  if (error) throw error;
-
+  // early returns
   if (loading) return <Spinner />;
   if (products.length === 0) return <PageNotFound />;
+  if (error) throw error;
 
   return (
     <>
