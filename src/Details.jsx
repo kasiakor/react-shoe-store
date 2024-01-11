@@ -33,7 +33,7 @@ export default function Details({ addToCart }) {
           disabled={!sku}
           className="btn btn-primary"
           onClick={() => {
-            addToCart();
+            addToCart(id, sku);
             navigate("/cart");
           }}
         >

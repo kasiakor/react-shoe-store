@@ -36,7 +36,7 @@ export default function App() {
               path="/:category/:id"
               element={<Details addToCart={addToCart} />}
             ></Route>
-            <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/cart" element={<Cart cart={cart} />}></Route>
           </Routes>
         </main>
       </div>
