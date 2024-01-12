@@ -33,6 +33,12 @@ export default function App() {
     });
   }
 
+  function removeCartItem() {
+    setCart((items) => {
+      return items.filter((i) => i.quantity !== 0);
+    });
+  }
+
   return (
     <>
       <div className="content">
@@ -47,7 +53,13 @@ export default function App() {
             ></Route>
             <Route
               path="/cart"
-              element={<Cart cart={cart} updateQuantity={updateQuantity} />}
+              element={
+                <Cart
+                  cart={cart}
+                  updateQuantity={updateQuantity}
+                  removeCartItem={removeCartItem}
+                />
+              }
             ></Route>
           </Routes>
         </main>
