@@ -8,7 +8,7 @@ export default function Cart({ cart }) {
 
   function renderItem(itemInCart) {
     console.log("item in the cart", itemInCart);
-    const { id, sku } = itemInCart;
+    const { id, sku, quantity } = itemInCart;
     const { price, name, image, skus } = products.find(
       (p) => p.id === parseInt(id)
     );
@@ -21,6 +21,7 @@ export default function Cart({ cart }) {
           <h3>{name}</h3>
           <p>${price}</p>
           <p>Size: {size}</p>
+          <p>Quantity: {quantity}</p>
         </div>
       </li>
     );
