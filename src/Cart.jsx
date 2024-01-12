@@ -24,10 +24,7 @@ export default function Cart({ cart, updateQuantity, removeCartItem }) {
           <p>
             <select
               value={quantity}
-              onChange={(e) => {
-                updateQuantity(sku, parseInt(e.target.value));
-                removeCartItem();
-              }}
+              onChange={(e) => updateQuantity(sku, parseInt(e.target.value))}
             >
               <option value="0">Remove</option>
               <option value="1">1</option>

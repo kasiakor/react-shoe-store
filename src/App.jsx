@@ -27,15 +27,12 @@ export default function App() {
 
   function updateQuantity(sku, quantity) {
     setCart((items) => {
+      if (quantity === 0) {
+        return items.filter((i) => i.sku !== sku);
+      }
       return items.map((i) =>
         i.sku === sku ? { ...i, quantity: quantity } : i
       );
-    });
-  }
-
-  function removeCartItem() {
-    setCart((items) => {
-      return items.filter((i) => i.quantity !== 0);
     });
   }
 
@@ -53,13 +50,7 @@ export default function App() {
             ></Route>
             <Route
               path="/cart"
-              element={
-                <Cart
-                  cart={cart}
-                  updateQuantity={updateQuantity}
-                  removeCartItem={removeCartItem}
-                />
-              }
+              element={<Cart cart={cart} updateQuantity={updateQuantity} />}
             ></Route>
           </Routes>
         </main>
