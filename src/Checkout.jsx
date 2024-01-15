@@ -14,7 +14,7 @@ const emptyAddress = {
   country: "",
 };
 
-export default function Checkout({ cart }) {
+export default function Checkout({ cart, emptyCart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
   const [address, setAddress] = useState(emptyAddress);
   const [saveError, setSaveError] = useState(null);
@@ -37,6 +37,8 @@ export default function Checkout({ cart }) {
 
     try {
       await saveShippingAddress(address);
+      emptyCart();
+      console.log("my cart", cart);
       setStatus(STATUS.COMPLETED);
     } catch (e) {
       setSaveError(e);
