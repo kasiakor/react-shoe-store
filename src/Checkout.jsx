@@ -19,6 +19,10 @@ export default function Checkout({ cart, emptyCart }) {
   const [address, setAddress] = useState(emptyAddress);
   const [saveError, setSaveError] = useState(null);
 
+  // derived state
+  const errors = getErrors(address);
+  const isValid = Object.keys(errors).length === 0;
+
   function handleChange(e) {
     setAddress((current) => {
       return { ...current, [e.target.id]: e.target.value };
@@ -34,17 +38,25 @@ export default function Checkout({ cart, emptyCart }) {
     // handle client validation
     event.preventDefault();
     setStatus(STATUS.SUBMITTING);
-
-    try {
-      await saveShippingAddress(address);
-      emptyCart();
-      console.log("my cart", cart);
-      setStatus(STATUS.COMPLETED);
-    } catch (e) {
-      setSaveError(e);
+    if (isValid) {
+      try {
+        await saveShippingAddress(address);
+        emptyCart();
+        console.log("my cart", cart);
+        setStatus(STATUS.COMPLETED);
+      } catch (e) {
+        setSaveError(e);
+      }
+    } else {
+      setStatus(STATUS.SUBMITTED);
     }
-    console.log("status", status);
-    console.log("address", address);
+  }
+
+  function getErrors(address) {
+    const result = {};
+    if (!address.city) result.city = "Provide correct city";
+    if (!address.country) result.country = "Provide correct country";
+    return result;
   }
 
   if (saveError) throw saveError;
@@ -55,6 +67,14 @@ export default function Checkout({ cart, emptyCart }) {
   return (
     <>
       <h1>Shipping Info</h1>
+      <div role="alert">
+        <p>Please fix the following errors:</p>
+        <ul>
+          {Object.keys(errors).map((key) => {
+            return <li key={key}>{errors[key]}</li>;
+          })}
+        </ul>
+      </div>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="city">City</label>
