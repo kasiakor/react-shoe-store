@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 
+// add enum pattern as form state
+const STATUS = {
+  IDLE: "IDLE",
+  SUBMITTING: "SUBMITTING",
+  SUBMITTED: "SUBMITTED",
+  COMPLETED: "COMPLETED",
+};
+
 // Declaring outside component to avoid recreation on each render
 const emptyAddress = {
   city: "",
@@ -7,6 +15,7 @@ const emptyAddress = {
 };
 
 export default function Checkout({ cart }) {
+  const [status, setStatus] = useState(STATUS.IDLE);
   const [address, setAddress] = useState(emptyAddress);
 
   function handleChange(e) {
@@ -21,7 +30,10 @@ export default function Checkout({ cart }) {
   }
 
   async function handleSubmit(event) {
-    // TODO
+    // handle client validation
+    event.preventDefault();
+    setStatus(STATUS.SUBMITTING);
+    console.log("status", status);
   }
 
   return (
@@ -62,6 +74,7 @@ export default function Checkout({ cart }) {
             type="submit"
             className="btn btn-primary"
             value="Save Shipping Info"
+            disabled={status === STATUS.SUBMITTING}
           />
         </div>
       </form>
