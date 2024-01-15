@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { saveShippingAddress } from "./services/shippingService";
 // add enum pattern as form state
 const STATUS = {
   IDLE: "IDLE",
@@ -17,6 +17,7 @@ const emptyAddress = {
 export default function Checkout({ cart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
   const [address, setAddress] = useState(emptyAddress);
+  const [saveError, setSaveError] = useState(null);
 
   function handleChange(e) {
     setAddress((current) => {
@@ -33,7 +34,20 @@ export default function Checkout({ cart }) {
     // handle client validation
     event.preventDefault();
     setStatus(STATUS.SUBMITTING);
+
+    try {
+      await saveShippingAddress(address);
+      setStatus(STATUS.COMPLETED);
+    } catch (e) {
+      setSaveError(e);
+    }
     console.log("status", status);
+    console.log("address", address);
+  }
+
+  if (saveError) throw saveError;
+  if (status === STATUS.COMPLETED) {
+    return <h1>Thank you for shopping!</h1>;
   }
 
   return (
