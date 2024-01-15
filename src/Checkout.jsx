@@ -18,6 +18,7 @@ export default function Checkout({ cart, emptyCart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
   const [address, setAddress] = useState(emptyAddress);
   const [saveError, setSaveError] = useState(null);
+  const [touched, setTouched] = useState({});
 
   // derived state
   const errors = getErrors(address);
@@ -31,7 +32,10 @@ export default function Checkout({ cart, emptyCart }) {
   }
 
   function handleBlur(event) {
-    // TODO
+    setTouched((cur) => {
+      // city or country
+      return { ...cur, [event.target.id]: true };
+    });
   }
 
   async function handleSubmit(event) {
@@ -67,14 +71,17 @@ export default function Checkout({ cart, emptyCart }) {
   return (
     <>
       <h1>Shipping Info</h1>
-      <div role="alert">
-        <p>Please fix the following errors:</p>
-        <ul>
-          {Object.keys(errors).map((key) => {
-            return <li key={key}>{errors[key]}</li>;
-          })}
-        </ul>
-      </div>
+      {!isValid && status === STATUS.SUBMITTED && (
+        <div role="alert">
+          <p>Please fix the following errors:</p>
+          <ul>
+            {Object.keys(errors).map((key) => {
+              return <li key={key}>{errors[key]}</li>;
+            })}
+          </ul>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="city">City</label>
@@ -86,6 +93,7 @@ export default function Checkout({ cart, emptyCart }) {
             onBlur={handleBlur}
             onChange={handleChange}
           />
+          <p role="alert">{touched.city && errors.city}</p>
         </div>
 
         <div>
@@ -103,6 +111,7 @@ export default function Checkout({ cart, emptyCart }) {
             <option value="United Kingdom">United Kingdom</option>
             <option value="USA">USA</option>
           </select>
+          <p role="alert">{touched.country && errors.country}</p>
         </div>
 
         <div>
