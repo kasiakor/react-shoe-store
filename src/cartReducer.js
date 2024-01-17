@@ -1,6 +1,6 @@
 export default function cartReducer(cart, action) {
   switch (action.type) {
-    case "emtpy":
+    case "empty":
       return [];
     case "add":
       const { id, sku } = action;

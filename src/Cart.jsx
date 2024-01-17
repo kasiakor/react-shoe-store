@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
 import useFetchAll from "./services/useFetchAll";
 
-export default function Cart({ cart, updateQuantity }) {
+export default function Cart({ cart, dispatch }) {
   const navigate = useNavigate();
   const urls = cart.map((i) => `products/${i.id}`);
   const { data: products, loading, error } = useFetchAll(urls);
@@ -26,7 +26,13 @@ export default function Cart({ cart, updateQuantity }) {
           <p>
             <select
               value={quantity}
-              onChange={(e) => updateQuantity(sku, parseInt(e.target.value))}
+              onChange={(e) =>
+                dispatch({
+                  type: "update",
+                  sku,
+                  quantity: parseInt(e.target.value),
+                })
+              }
             >
               <option value="0">Remove</option>
               <option value="1">1</option>
