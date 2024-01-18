@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useCart } from "./cartContext";
 import { saveShippingAddress } from "./services/shippingService";
 // add enum pattern as form state
 const STATUS = {
@@ -14,7 +15,8 @@ const emptyAddress = {
   country: "",
 };
 
-export default function Checkout({ cart, dispatch }) {
+export default function Checkout() {
+  const { cart, dispatch } = useCart();
   const [status, setStatus] = useState(STATUS.IDLE);
   const [address, setAddress] = useState(emptyAddress);
   const [saveError, setSaveError] = useState(null);
