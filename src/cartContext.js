@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import cartReducer from "./cartReducer";
 
-export const CartContext = React.createContext(null);
+const CartContext = React.createContext(null);
 
 // will be called only one time when the app loads
 let initialState;
@@ -27,4 +27,10 @@ export function CartProvider(props) {
       {props.children}
     </CartContext.Provider>
   );
+}
+
+// custom hook to provide cart context
+export function useCart() {
+  const context = useContext(CartContext);
+  return context;
 }
