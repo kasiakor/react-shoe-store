@@ -1,3 +1,3 @@
 import React from "react";
 
-export const cartContext = React.createContext(null);
+export const CartContext = React.createContext(null);

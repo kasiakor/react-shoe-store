@@ -7,6 +7,7 @@ import Details from "./Details";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
+import { CartContext } from "./cartContext";
 import cartReducer from "./cartReducer";
 
 let initialState;
@@ -23,7 +24,7 @@ export default function App() {
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   return (
-    <>
+    <CartContext value={{ cart, dispatch }}>
       <div className="content">
         <Header />
         <main>
@@ -46,6 +47,6 @@ export default function App() {
         </main>
       </div>
       <Footer />
-    </>
+    </CartContext>
   );
 }
