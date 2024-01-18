@@ -6,11 +6,10 @@ import Details from "./Details";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
-import { CartContext } from "./cartContext";
 
 export default function App() {
   return (
-    <CartContext value={{ cart, dispatch }}>
+    <>
       <div className="content">
         <Header />
         <main>
@@ -30,6 +29,6 @@ export default function App() {
         </main>
       </div>
       <Footer />
-    </CartContext>
+    </>
   );
 }
