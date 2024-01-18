@@ -35,10 +35,7 @@ export default function App() {
               path="/:category/:id"
               element={<Details dispatch={dispatch} />}
             ></Route>
-            <Route
-              path="/cart"
-              element={<Cart cart={cart} dispatch={dispatch} />}
-            ></Route>
+            <Route path="/cart" element={<Cart />}></Route>
             <Route
               path="/checkout"
               element={<Checkout cart={cart} dispatch={dispatch} />}
